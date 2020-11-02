@@ -67,5 +67,4 @@ public class IocCollectionTest {
 		/***Then***/
 		assertEquals(3, set.size());
 	}
-
 }
