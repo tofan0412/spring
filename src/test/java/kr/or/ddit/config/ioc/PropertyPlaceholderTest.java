@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,5 +29,4 @@ public class PropertyPlaceholderTest {
 		assertEquals("whc", dbProperty.getUser());
 		assertEquals("java", dbProperty.getPass());
 	}
-
 }
