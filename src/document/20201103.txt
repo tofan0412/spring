@@ -107,15 +107,7 @@ dispatcherServlet의 url-pattern에 따른 정상 처리 여부
 	    에러가 발생한다.
 	    ** *.do로 모든 dispatherServlet을 설정하는 경우 -> 해당 케이스에 대해서만 호출한다. 
 	    
-	    
 	    내장된 서블릿 : default
 	    
 	    만약 url-pattern을 "/"와 같이 설정하면, Server에서 설정한 "/" 서블릿이 올까, 사용자가 정의한 "/" 서블릿이 올까.
 	    -> Spring에서 설정한 url-pattern이 "/"인 서블릿으로 간다. 
-	    
-	
-	
-	
-	
-	
-	
