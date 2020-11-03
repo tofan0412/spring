@@ -35,6 +35,7 @@ public class IocDITest {
 	 */
 	@Resource(name="boardService")
 	BoardService boardService;
+	
 	@Resource(name="boardServiceC")
 	BoardService boardServiceC;
 	
@@ -52,6 +53,8 @@ public class IocDITest {
 		/***Then***/
 		assertEquals(30, person.getAge());
 		assertEquals("내용", person.getBoardRepository().getBoard(1).getContent());
+		
+		
 	}
 	
 	// 스프링 컨테이너를 주입받아 DL을 통해 boardService 스프링 빈이 제대로 생성되었는지를 확인
@@ -85,11 +88,9 @@ public class IocDITest {
 		assertEquals(boardService.getBoardRepository(), boardServiceC.getBoardRepository());
 	}
 	
-	
 	@Test
 	public void DItest() {
 		/***Given***/
-		
 
 		/***When***/
 		BoardServiceI boardService = 
