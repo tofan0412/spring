@@ -9,4 +9,46 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- 스프링 부모 컨테이너 생성 : service, repository -->
+  
+  
+  <!--  listener의 역할 :서버 기동이라는 이벤트를 감지하는 역할을 한다.  
+  		일단 서버가 열리면, context-param 값을 읽는다. 
+  -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:kr/or/ddit/config/db/spring/root-context.xml</param-value>
+  </context-param>
+  
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!--  자식 컨테이너 만들기.. : DispatcherServlet통해 만든다 : Controller -->
+  <!--  dispatcherServlet은 Spring에서 제공하는 클래스이다. -->
+  <servlet>
+  	<servlet-name>dispatcherServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:kr/or/ddit/config/db/spring/application-context.xml</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup>
+  
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>dispatcherServlet</servlet-name>
+  	<!--  어떤 url 요청이 들어왔을 때 dispatcherServlet을 호출할 것인가? -->
+  	<url-pattern>/</url-pattern>
+  	
+  	<!-- 위와 같이 하면, *.jsp 와 같이 tomcat에서 처리해줄 수 있는 서블릿도 호출하지 못해 문제가 발생한다. 
+  	즉, 모든 요청을 dispatcherServlet이 처리하기 때문에 문제가 발생한다. 
+  	 -->
+  	 
+  	 <!--  / 로 url-pattern을 써주면 default servlet이 된다. 이 때 Server의 web.xml에도 / 라는
+  	 default servlet이 존재하지만, 사용자가 작성한 서블릿이 우선시된다. -->
+  </servlet-mapping>
+  
 </web-app>

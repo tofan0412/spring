@@ -1,0 +1,121 @@
+리터럴(literal) : 값 자체.
+리터럴 표기법
+
+정수 표현?
+int a = 10;
+
+문자열의 표현?
+String str = "hello, world";
+
+날짜의 표현?
+java ==> Date 객체를 통해 표현한다. 
+
+sql?
+SYSDATE => 함수, 오라클 서버의 현재 시간을 반환하는 오라클 내장 함수
+NLS 포맷에 정의된 형식을 따르지만 TO_DATE 함수 사용을 권장한다.
+
+한국 '2020-11-03'
+미국 '11-03-2020'
+
+객체의 필드(속성)에 값을 주입 시 xml에서는 문자열과 숫자 구분이 되지 않지만 
+해당 필드의 타입을 보고 Spring Container가 적당한 형변환을 통해 값을 주입한다.
+
+단, 날짜에 대해서는 Spring framework에서 기본 전략을 제공하지 않기 때문에
+개발자가 별도로 설정을 해줘야 한다.
+
+타입변환이 필요로 하는 곳
+1. bean 속성 주입
+2. controller 메서드의 파라미터 바인딩
+
+스프링 타입변환 방식 3가지
+1. property editor ( 문자 => 타입 변환)
+
+2. conversion service ( 타입 => 타입 변환)
+	. Converter < 변경전 타입, 변경 후 타입> 
+	. 스프링 프레임워크에 등록 ( bean 이름이 conversionService를 사용하게끔 설정되어 있음..)
+		ConversionServiceFactoryBean 클래스의 converters 속성에 set으로 넣어준다. 
+		<bean id="conversionService" class="...ConversionServiceFactoryBean">
+			<property name="converters">
+				<set>
+					<bean class="Converter 인터페이스를 구현한 클래스"/>
+				</set>
+			</property>
+		</bean>
+
+3. formatting conversion service(*****)
+	. 주입하려는 필드에 포맷팅과 관련된 어노테이션을 설정
+	. FormattingConversionServieFactoryBean 클래스를 스프링 빈으로 등록
+	. 2번 방법과 동일하게 해당 클래스에 대한 빈의 이름은 conversionService로 고정된다. 
+
+	
+	
+Spring MVC
+	Spring Container의 부모-자식 관계
+	객체의 상속과 동일한 원리
+	부모 컨테이너에 등록된 Spring Bean을 자식 컨테이너에서도 참조 가능
+	부모는 자식 컨테이너에 등록된 스프링 빈을 참조할 수 없음.
+	
+	자식 컨테이너가 둘 이상일 때, 두 자식 컨테이너에서 공통적으로 사용할
+	스프링 빈을 부모 컨테이너에 넣게 될 경우, 자식 입장에서는 별도의 스프링 빈을 등록하지 않고
+	사용이 가능하다.
+	
+	부모 컨테이너에서 스프링 빈을 한번만 등록하므로 메모리 절약
+	
+	자식 컨테이너가 하나만 필요한 상황이더라도 추후 확장성을 위해
+	부모 - 자식 컨테이너로 분리하여 확장을 고려한다.
+	
+	Spring Container에서 listenr 의 존재 : Spring Container 객체가 생성될 때의 이벤트 처리를 위해 ..
+	정확하게는 서버가 동작할 때, context.xml 이라는 root 컨테이너를 생성한다. 
+	
+	1. 부모 컨테이너의 생성
+	
+	ContextLoaderListener 클래스를 이용하여 서버 기동 시 이벤트를 감지한다.
+	<listener>
+	<listener-class>org.springframework....ContextLoaderListener</listenr-class>
+	</listener>
+	
+	==> <context-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>설정 파일 위치</param-value>
+		</context-param> 
+		초기화 파라미터 중 contextConfigLocation으로 설정된 값을 찾아
+		부모 컨테이너(service, dao)를 생성한다.
+		
+	2. 자식 컨테이너의 생성
+	dispatcherServlet을 통해 생성한다.
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>org.springframework...DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>설정파일위치, 설정파일위치</param-value>
+		</init-param>
+	</servlet>
+	
+	
+	
+dispatcherServlet의 url-pattern에 따른 정상 처리 여부
+	url-pattern 	mvc:default-servlet-handler 적용 여부 		spring controller(/login/view.do)		index.jsp			js/bootstrap.js
+	    /*							미적용						 	      x								x						x
+	    /*							적용									  x					O(정적자료로, HTML 코드가 온다)	 		O					
+	    /							미적용								  O								O						X
+	    /							적용									  O								O						O
+  (단, mvc:annotaion-
+  driven이 적용되어있어야 한다.)  
+	    
+	    우선순위는 /*가 /*.jsp보다 높다. 다만 String의 경우 jsp 와 정적인 자료(*.js)를 처리할 수 없기 때문에
+	    에러가 발생한다.
+	    ** *.do로 모든 dispatherServlet을 설정하는 경우 -> 해당 케이스에 대해서만 호출한다. 
+	    
+	    
+	    내장된 서블릿 : default
+	    
+	    만약 url-pattern을 "/"와 같이 설정하면, Server에서 설정한 "/" 서블릿이 올까, 사용자가 정의한 "/" 서블릿이 올까.
+	    -> Spring에서 설정한 url-pattern이 "/"인 서블릿으로 간다. 
+	    
+	
+	
+	
+	
+	
+	
