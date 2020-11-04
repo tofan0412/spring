@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +17,11 @@ import kr.or.ddit.member.model.MemberVo;
 @Service("memberService")
 public class MemberService implements MemberServiceI {
 	
+	@Resource(name="memberDao")
 	private MemberDaoI memberDao;
 	
 	public MemberService(){
-		memberDao = new MemberDao();
+//		memberDao = new MemberDao();
 	}
 	
 	@Override

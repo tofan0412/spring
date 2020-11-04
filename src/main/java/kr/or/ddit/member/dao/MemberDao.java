@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.db.MyBatisUtil;
 import kr.or.ddit.member.model.MemberVo;
 
+@Repository("memberDao")
 public class MemberDao implements MemberDaoI{
 	private static MemberDao dao;
 	

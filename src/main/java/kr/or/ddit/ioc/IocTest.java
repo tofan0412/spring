@@ -1,4 +1,4 @@
-package kr.or.ddit.config.ioc;
+package kr.or.ddit.ioc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
