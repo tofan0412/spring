@@ -32,7 +32,7 @@ public class LoginController {
 	@Resource(name="memberService")
 	private MemberServiceI memberService;
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-
+	
 	@ModelAttribute("rangers")
 	public List<String>	ranger(){
 		logger.debug("loginController ranger() 호출됨.");
@@ -92,7 +92,8 @@ public class LoginController {
 			model.addAttribute("to_day", new Date());
 			return "main";	// viewName이 바로 main이다.
 		}else{
-			model.addAttribute("msg", "fail"); 
+			model.addAttribute("msg", "fail");
+			
 			return "login/view"; // viewName이 바로 view이다.
 		}
 	}

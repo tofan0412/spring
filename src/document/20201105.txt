@@ -1,0 +1,35 @@
+복수 파라미터 받기
+동일한 파라미터 명으로 여러 개의 값을 보내는 형태
+<form> 
+	<input type="text" name="userid" value="brown"/><br>
+	<input type="text" name="userid" value="sally"/><br>
+	<input type="submit" value="전송"/><br>
+</form> 
+
+위의 form 태그를 전송하면 userid라는 파라미터명으로 brown, sally 두 개의 값이 전송된다.
+
+-------------Server Side----------------
+servlet
+	String userid = request.getParameter("userid");	// 가장 첫번째인 "brown"이 출력된다.
+	String[] userid = request.getParameterValues("userid"); // 복수의 파라미터를 받기 위한 처리.
+	
+	** SPRING으로 하려면 어떻게 해야 할까? 
+	1. Command 객체의 선언
+	2. 파라미터 변수를 선언하면 자동으로 binding
+	
+Spring framework에서 복수 파라미터 받기
+	1. List로 받기 : @RequestParam("userid") List<String> userList
+	2. 배열로 받기  : @RequestParam("userid") String[] userArr
+				    String[] userid	--> @RequestParam이 없는 대신에, form 태그의 name값과 이름이 동일해야 한다. 
+	
+	3. command 객체로 받기 : 
+		필드를 List로 선언하고 필드 이름을 파라미터 이름과 동일하게 한다. 
+	 (Vo 객체를 만들어서 받는 것을 의미한다. MultiParamController에서 Rangers에 해당)
+	 
+	 
+redirect는 Spring에서 어떻게 할까?
+jsp/servlet : response.sendRedirect("리다이렉트 주소")
+spring : viewName 앞에 접두어를 붙여서 반환한다. 
+		"redirect:리다이렉트할 주소" 
+		"forward:포워딩주소"
+	
