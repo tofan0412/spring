@@ -33,3 +33,5 @@ spring : viewName 앞에 접두어를 붙여서 반환한다.
 		"redirect:리다이렉트할 주소" 
 		"forward:포워딩주소"
 	
+	
+JSP 프로젝트의 member와 관련된 화면, 기능을 Spring 프로젝트로 이관하기..

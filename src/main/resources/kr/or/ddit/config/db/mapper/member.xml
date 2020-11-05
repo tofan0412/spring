@@ -10,4 +10,48 @@
 		WHERE USERID = #{userId}
 	</select>
 
+	<select id="getMemberAll" resultType="MemberVo">
+		SELECT *
+		FROM USERS
+	</select>
+
+	<select id="getMemberPage" resultType="MemberVo"
+		parameterType="map">
+		SELECT *
+		FROM (SELECT ROWNUM RN, A.*
+		FROM (SELECT *
+		FROM USERS
+		ORDER BY USERID) A)
+		WHERE RN BETWEEN (#{page} - 1) * #{pageSize} + 1 AND #{page} * #{pageSize}
+
+	</select>
+
+	<select id="selectMemberTotalCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM USERS
+	</select>
+
+	<insert id="insertMember" parameterType="MemberVo">
+		insert into users values(#{userid}, #{usernm}, #{pass}, sysdate, #{alias},
+		#{addr1}, #{addr2}, #{zipcode}, #{filename}, #{realFilename})
+	</insert>
+
+	<delete id="deleteMember" parameterType="String">
+		DELETE USERS
+		WHERE userid = #{userid}
+	</delete>
+
+	<update id="updateMember" parameterType="MemberVo">
+		update users
+		set USERNM = #{usernm},
+		pass = #{pass},
+		ALIAS = #{alias},
+		ADDR1 = #{addr1},
+		ADDR2 = #{addr2},
+		ZIPCODE = #{zipcode},
+		FILENAME = #{filename},
+		REALFILENAME = #{realFilename}
+		where userid = #{userid}
+	</update>
+
 </mapper>

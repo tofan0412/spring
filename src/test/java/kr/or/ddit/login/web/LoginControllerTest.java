@@ -56,4 +56,5 @@ public class LoginControllerTest extends WebTestConfig{
 		assertEquals("login/view", mav.getViewName());
 		assertEquals("fail", mav.getModel().get("msg"));
 	}
+	
 }
