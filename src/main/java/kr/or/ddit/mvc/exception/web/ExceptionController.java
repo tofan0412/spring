@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ExceptionController {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionController.class);
+	
 	@RequestMapping("/exception/view")
 	public String view() {
-		
 		logger.debug("ExceptionController.view()");
 		throw new ArithmeticException();
 //		return "";

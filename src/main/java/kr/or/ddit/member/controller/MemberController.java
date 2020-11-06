@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.View;
 
 import kr.or.ddit.member.model.JSRMemberVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.model.MemberVoValidator;
 import kr.or.ddit.member.service.MemberServiceI;
+import kr.or.ddit.mvc.view.ProfileImgView;
 
 
 @RequestMapping("/member")
@@ -51,6 +53,7 @@ public class MemberController {
 //	public String Regist(@Valid JSRMemberVo memberVo, BindingResult br,@RequestPart("file") MultipartFile file, Model model) {
 		// 검증
 		// new MemberVoValidator().validate(memberVo, br);
+		
 		if (br.hasErrors()) {
 			// 검증을 통과하지 못했으므로 사용자 등록 화면으로 이동한다. 
 			return "member/memberRegist";
@@ -218,6 +221,18 @@ public class MemberController {
 		sos.close();
 	}
 	
+	@RequestMapping("/profileImgView")
+	public String/*View*/ profileImgView(@RequestParam("userid") String userid, Model model) 
+				throws ServletException, IOException{
+		// 응답으로 생성하려고 하는 것 : Img 파일을 읽어서 output stream 객체에 쓰는 것
+		// 
+		MemberVo memberVo = memberService.getMember(userid);
+		model.addAttribute("filepath", memberVo.getFilename());
+		
+//		return new ProfileImgView();
+		return "profileImgView";
+	}
+	
 	@RequestMapping("profileDownload")
 	public void profileDownload(@RequestParam("userid") String userid,
 					HttpServletResponse response) throws ServletException, IOException{
@@ -243,4 +258,6 @@ public class MemberController {
 		sos.flush();	// 버퍼에 남아있는걸 전송
 		sos.close();
 	}
+	
+	
 }
