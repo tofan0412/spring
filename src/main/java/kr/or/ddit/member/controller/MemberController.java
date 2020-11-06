@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.member.model.JSRMemberVo;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.member.model.MemberVoValidator;
 import kr.or.ddit.member.service.MemberServiceI;
 
 
@@ -44,8 +47,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/Regist")
-	public String Regist(MemberVo memberVo,
-						@RequestPart("file") MultipartFile file, Model model) {
+	public String Regist(@Valid MemberVo memberVo, BindingResult br,@RequestPart("file") MultipartFile file, Model model) {
+//	public String Regist(@Valid JSRMemberVo memberVo, BindingResult br,@RequestPart("file") MultipartFile file, Model model) {
+		// 검증
+		// new MemberVoValidator().validate(memberVo, br);
+		if (br.hasErrors()) {
+			// 검증을 통과하지 못했으므로 사용자 등록 화면으로 이동한다. 
+			return "member/memberRegist";
+		}
+		
 		memberVo.setRealFilename(file.getOriginalFilename());
 		memberVo.setFilename("d:\\upload\\"+file.getOriginalFilename());
 		
