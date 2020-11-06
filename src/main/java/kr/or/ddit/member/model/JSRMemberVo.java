@@ -4,10 +4,10 @@ import java.sql.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class MemberVo {
+public class JSRMemberVo {
 	private String userid;
 	private String pass;
-	@NotEmpty
+	@NotEmpty	// Null이면 안되고 공백 체크
 	private String usernm;
 	private Date reg_dt;
 	private String alias;
@@ -17,11 +17,11 @@ public class MemberVo {
 	private String filename;
 	private String realFilename;
 	
-	public MemberVo() {
+	public JSRMemberVo() {
 		
 	}
 	
-	public MemberVo(String userid, String pass, String usernm, String alias, String addr1, String addr2,
+	public JSRMemberVo(String userid, String pass, String usernm, String alias, String addr1, String addr2,
 			String zipcode, String filename, String realFilename) {
 		
 		//super(); 부모 클래스는 Object. 따라서 필요없다.
@@ -121,7 +121,7 @@ public class MemberVo {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MemberVo other = (MemberVo) obj;
+		JSRMemberVo other = (JSRMemberVo) obj;
 		if (addr1 == null) {
 			if (other.addr1 != null)
 				return false;

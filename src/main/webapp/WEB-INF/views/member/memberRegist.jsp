@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,6 +85,7 @@
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="usernm" name="usernm"
 								placeholder="사용자 이름">
+							<span style="color : red;"><form:errors path="memberVo.usernm"/></span>
 						</div>
 					</div>
 					<div class="form-group">
