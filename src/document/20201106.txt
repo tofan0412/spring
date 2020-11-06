@@ -57,7 +57,7 @@ SPRING Controller에서 예외처리하기
 		Component-scan element를 수정
 	
 	- @ResponseStatus를 이용한 응답 코드 설정
-	사용자 정의 예외가 발생 시 Spring Framework에게 응답 코드를 설정하는 방법
+	사용자 정의 예외가 발생 시 Spring Framework에게 응답 코드를 설정하는 방법!
 	
 	
 
