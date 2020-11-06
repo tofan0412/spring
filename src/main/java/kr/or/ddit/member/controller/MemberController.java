@@ -52,6 +52,8 @@ public class MemberController {
 		// 파일 업로드하기..
 		File uploadFile = new File("d:\\upload\\" + file.getOriginalFilename());
 		
+		// if(file.getSize() > 0) 으로 사용자가 파일을 등록했는지, 안했는지를 구별할 수 있다. 
+		
 		// 파일 변경 사항을 DB에 기재한다. 
 		try {
 			file.transferTo(uploadFile);
@@ -99,6 +101,8 @@ public class MemberController {
 	// 최초 페이지 진입시
 	@RequestMapping("/getMemberList")
 	public String getMemberList(Model model) {
+		// 다음과 같이 파라미터를 받으면, getMemberList, getMemberList_p로 메서드를 나눌 필요가 없다.
+		// @RequestParam("page", required=false ,defaultValue=1) int page 
 		Map<String, Integer> page = new HashMap<>();
 		
 		int pagenm = 1;
