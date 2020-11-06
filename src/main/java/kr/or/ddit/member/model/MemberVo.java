@@ -2,12 +2,9 @@ package kr.or.ddit.member.model;
 
 import java.sql.Date;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class MemberVo {
 	private String userid;
 	private String pass;
-	@NotEmpty
 	private String usernm;
 	private Date reg_dt;
 	private String alias;
