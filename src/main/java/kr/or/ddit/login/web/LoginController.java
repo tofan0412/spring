@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,10 +80,13 @@ public class LoginController {
 	@RequestMapping("/process")
 	public String process(
 			@RequestParam(name = "userid", required = false, defaultValue = "brown@line.kr") String user_id,
+			@RequestBody String body,
 			String userid, String pass, MemberVo member, HttpSession session, Model model) {
 
 		logger.debug("loginController process() 호출. {} / {} / {}", userid, pass, member);
 		logger.debug("파람 연결하기 : {} ", user_id);
+		
+		logger.debug("body : {}", body);
 		// memberService의 getMember() 메서드를 호출하여
 		// DB에서 데이터를 조회하여 logger를 이용하여 console에 출력하는 부분까지 진행.
 //		MemberService service = new MemberService();
