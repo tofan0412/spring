@@ -1,3 +1,50 @@
 .xls-> ms-office에서 xls 형식에서는 html을 화면에 표시 가능
 .xlsx -> html로 표현하는게 불가능
 java에서 엑셀 파일을 다룰 수 있는 api : apache-poi
+
+view : Model에 저장된 header, data 속성을 읽어 poi 라이브러리를 이용하여
+	   엑셀 파일로 생성, 응답
+	   
+view Resolver
+상황 : 
+	tileViewResolver order 0
+	beanViewResolver order 1
+	InternalResourceViewResolver order 2
+
+만약 Controller가 tiles/member/list라는 viewName을 반환한다면?
+	1. viewResolver 우선순위에 따라, tileViewResolver가 먼저 적용된다.
+		.tiles-definitions 중에 viewName("tiles/member/list")와 동일한 definition이 있는지 검색한다. 
+		.만약 존재하면 해당 definition으로 응답을 생성한다. 
+		
+		
+만약 controller가 jsonView라는 viewName을 반환한다면?
+	1. viewResolver 우선순위에 따라, tileViewResolver가 먼저 적용된다.
+		.tiles-definitions 중에 viewName("tiles/member/list")와 동일한 definition이 있는지 검색한다. 
+		.만약 존재하면 해당 definition으로 응답을 생성한다.
+		==> 존재하지 않는다.
+		
+	2. 후순위 설정에 따라 beanNameViewResolver가 적용된다.
+		. viewName과 동일한 이름의 Spring bean이 존재하면 해당 bean을 view객체로 사용한다.
+		==> jsonView(MappingJackson2JsonView) 존재
+			해당 view객체로 응답을 생성한다. 
+			
+			
+만약 conteoller가 main/view라는 viewName 문자열을 반환함녀
+	1. viewResolver 우선순위에 따라, tileViewResolver가 먼저 적용된다.
+		.tiles-definitions 중에 viewName("tiles/member/list")와 동일한 definition이 있는지 검색한다. 
+		.만약 존재하면 해당 definition으로 응답을 생성한다.
+		==> 존재하지 않는다.
+		
+	2. 후순위 설정에 따라 beanNameViewResolver가 적용된다.
+		. viewName과 동일한 이름의 Spring bean이 존재하면 해당 bean을 view객체로 사용한다.
+		==> main/view라는 spring bean이 존재하지 않는다.
+	3. 후순위 설정에 따라 internalResourceViewResolver가 적용된다.
+		==> 해당 리소스가 존재하지 않아도 무조건 응답을 보낸다 => 404 에러 발생할 수도 있다.
+		** 해당 사유로 인해 internalResourceViewResolver는 viewResolver
+			설정에서 가장 후순위로 설정하는 것이 일반적이다. 
+			
+			
+			
+Ajax를 통한 데이터의 전송
+
+415 error : 사용자가 요청한 data와 server에서 처리하고자 하는 형식이 맞지 않는 경우?

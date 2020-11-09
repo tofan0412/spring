@@ -37,7 +37,7 @@ public class MemberController {
 	
 	@RequestMapping("/memberRegist")
 	public String memberRegist() {
-		return "/member/memberRegist";
+		return "tiles.member.memberRegistTile";
 	}
 	
 	@Resource
@@ -56,7 +56,7 @@ public class MemberController {
 		
 		if (br.hasErrors()) {
 			// 검증을 통과하지 못했으므로 사용자 등록 화면으로 이동한다. 
-			return "member/memberRegist";
+			return "tiles.member.memberRegistTile";
 		}
 		
 		memberVo.setRealFilename(file.getOriginalFilename());
@@ -107,7 +107,7 @@ public class MemberController {
 		model.addAttribute("memList", map.get("memList"));
 		model.addAttribute("pages", map.get("pages"));
 		
-		return "/member/memberList";
+		return "tiles.member.memberListTile";
 	}
 	
 	
@@ -134,7 +134,8 @@ public class MemberController {
 		model.addAttribute("memList", map.get("memList"));
 		model.addAttribute("pages", map.get("pages"));
 		
-		return "/member/memberList";
+		//return "member/memberListContent";
+		return "tiles.member.memberListTile";
 	}
 	
 	// 사용자 이름을 클릭했을 때 사용자 정보를 출력 ..
@@ -145,7 +146,7 @@ public class MemberController {
 		
 		model.addAttribute("memberVo", memberVo);
 		
-		return "/member/member";
+		return "tiles.member.memberTile";
 	}
 	
 	@RequestMapping("/showMemberInfo_u")
@@ -155,7 +156,7 @@ public class MemberController {
 		
 		model.addAttribute("memberVo", memberVo);
 		
-		return "/member/memberUpdate";
+		return "tiles.member.memberUpdateTile";
 	}
 	
 	@RequestMapping("/memberUpdate")
@@ -190,7 +191,7 @@ public class MemberController {
 		
 		if (updateCnt > 0) {
 			model.addAttribute("memberVo", memberVo);
-			return "/member/member";
+			return "tiles.member.memberTile";
 		}
 		else {
 			return "/member/getMemberList";
