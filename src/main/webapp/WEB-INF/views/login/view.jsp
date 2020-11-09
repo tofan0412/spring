@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,17 +91,17 @@
 	<div class="container">
 		<form class="form-signin"
 			action="${pageContext.request.contextPath}/login/process" method="POST">
-			<h2 class="form-signin-heading">Please sign in</h2>
-			<label for="inputEmail" class="sr-only">Email address</label> <input
+			<h2 class="form-signin-heading"><spring:message code="login.signin"></spring:message></h2>
+			<label for="inputEmail" class="sr-only"></label> <input
 				type="text" id="userid" name="userid" class="form-control"
 				placeholder="Email address" required autofocus value="brown">
-			<label for="inputPassword" class="sr-only">Password</label> <input
+			<label for="inputPassword" class="sr-only"><spring:message code="login.password"></spring:message></label> <input
 				type="password" id="pass" name="pass"
 				class="form-control" placeholder="Password" required
 				value="brownPass">
 			<div class="checkbox">
 				<label> <input type="checkbox" value="remember-me">
-					Remember me
+					<spring:message code="login.rememberme"></spring:message>
 				</label>
 			</div>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
