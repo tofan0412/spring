@@ -1,0 +1,3 @@
+.xls-> ms-office에서 xls 형식에서는 html을 화면에 표시 가능
+.xlsx -> html로 표현하는게 불가능
+java에서 엑셀 파일을 다룰 수 있는 api : apache-poi

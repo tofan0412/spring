@@ -234,29 +234,12 @@ public class MemberController {
 	}
 	
 	@RequestMapping("profileDownload")
-	public void profileDownload(@RequestParam("userid") String userid,
-					HttpServletResponse response) throws ServletException, IOException{
+	public String profileDownload(@RequestParam("userid") String userid, Model model)
+				throws ServletException, IOException{
 		MemberVo memberVo = memberService.getMember(userid);
-
-		// response의 content-type 설정
-		response.setHeader("Content-Disposition", "attachment; filename=\"\""+ memberVo.getRealFilename() + "\"");
-		response.setContentType("application/octet-stream");
-		
-		// 경로 확인 후 파일 입출력을 통해 응답 생성
-		// 파일 읽기
-		// 응답 생성
-		memberVo.getFilename();	// 파일 경로
-		FileInputStream fis = new FileInputStream(memberVo.getFilename());
-		ServletOutputStream sos = response.getOutputStream();
-		
-		byte[] buffer = new byte[512];
-		
-		while( fis.read(buffer) != -1) {	// 읽을 수 있는게 존재하는 동안..
-			sos.write(buffer);
-		}
-		fis.close();
-		sos.flush();	// 버퍼에 남아있는걸 전송
-		sos.close();
+		model.addAttribute("realFilename", memberVo.getRealFilename());
+		model.addAttribute("filepath", memberVo.getFilename());
+		return "profileImgDownloadView";
 	}
 	
 	
