@@ -27,6 +27,7 @@ import kr.or.ddit.member.model.JSRMemberVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.model.MemberVoValidator;
 import kr.or.ddit.member.service.MemberServiceI;
+import kr.or.ddit.model.PageVo;
 import kr.or.ddit.mvc.view.ProfileImgView;
 
 
@@ -138,6 +139,49 @@ public class MemberController {
 		return "tiles.member.memberListTile";
 	}
 	
+	
+	
+	
+	@RequestMapping(path="/listAjaxPage")
+	public String listAjaxPage() {
+		return "tiles.member.listAjaxPage";
+	}
+	
+	// 페이지요청과 다르게 page, pageSize 파라미터가 반드시 존재한다는 가정으로 작성한다. 
+	@RequestMapping("/listAjax")
+	public String listAjax(PageVo pageVo, Model model) {
+		logger.debug("pageVo : {}", pageVo);
+		Map<String, Integer> page = new HashMap<>();
+		// 필요한 페이지의 갯수
+		page.put("page", pageVo.getPage());
+		// 한 페이지 당 출력할 글의 갯수
+		page.put("pageSize", pageVo.getPageSize());
+		
+		Map<String, Object> map = memberService.getMemberPage(page);
+		model.addAttribute("memList", map.get("memList"));
+		model.addAttribute("pages", map.get("pages"));
+		
+		return "jsonView";
+	}
+	
+	
+	@RequestMapping("/listAjaxHTML")
+	public String listAjaxHTML(PageVo pageVo, Model model) {
+		Map<String, Integer> page = new HashMap<>();
+		// 필요한 페이지의 갯수
+		page.put("page", pageVo.getPage());
+		// 한 페이지 당 출력할 글의 갯수
+		page.put("pageSize", pageVo.getPageSize());
+		
+		Map<String, Object> map = memberService.getMemberPage(page);
+		model.addAttribute("memList", map.get("memList"));
+		model.addAttribute("pages", map.get("pages"));
+		
+		// 응답을 html => jsp로 생성
+		return "member/listAjaxHTML";
+	}
+	
+	
 	// 사용자 이름을 클릭했을 때 사용자 정보를 출력 ..
 	@RequestMapping(path="/showMemberInfo")
 	public String showMemberInfo(@RequestParam("userid") String userid, Model model) {
@@ -148,6 +192,24 @@ public class MemberController {
 		
 		return "tiles.member.memberTile";
 	}
+	
+	@RequestMapping(path="/MemberInfoAjax")
+	public String memberInfoAjax(String userid, Model model) {
+		model.addAttribute("userid", userid);
+		return "tiles.member.memberAjax";
+	}
+	
+	@RequestMapping("showMemberInfoAjax")
+	public String showMemberInfoAjax(String userid, Model model) {
+		logger.debug("userid : {}", userid);
+		
+		MemberVo memberVo = memberService.getMember(userid);
+		
+		model.addAttribute("memberVo", memberVo);
+		
+		return "member/memberAjaxHTML";
+	}
+	
 	
 	@RequestMapping("/showMemberInfo_u")
 	public String showMemberInfo_u(@RequestParam("userid") String userid, Model model) {
