@@ -40,14 +40,14 @@ public class MemberService implements MemberServiceI {
 	}
 
 	@Override
-	public Map<String, Object> getMemberPage(Map<String, Integer> page) {
+	public Map<String, Object> getMemberPage(Map<String, String> page) {
 		
 		Map<String, Object> map = new HashMap<>();
 		List<MemberVo> memList = memberDao.getMemberPage(page);
 		map.put("memList", memList);
 		
 		int totalCnt = memberDao.selectMemberTotalCnt();
-		int pages = (int)Math.ceil((double)totalCnt / page.get("pageSize"));
+		int pages = (int)Math.ceil((double)totalCnt / Integer.parseInt(page.get("pageSize")));
 		
 		map.put("pages", pages);
 		

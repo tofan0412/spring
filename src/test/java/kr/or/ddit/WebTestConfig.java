@@ -1,12 +1,17 @@
 package kr.or.ddit;
 
-import static org.junit.Assert.*;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -17,9 +22,14 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= 
 	{"classpath:kr/or/ddit/config/db/spring/root-context.xml",
+	 "classpath:kr/or/ddit/config/spring/datasource-context_dev.xml",
+	 "classpath:kr/or/ddit/config/db/spring/transaction-context.xml",
 	 "classpath:kr/or/ddit/config/db/spring/application-context.xml"})
 @WebAppConfiguration
 public class WebTestConfig {
+	@Resource(name="dataSource")
+	private DataSource dataSource;
+	
 	// 테스트 대상 : LoginController
 		// 					--> memberService를 주입 받아야 함.
 		//						--> MemberRepository를 주입받아야 함.
@@ -44,8 +54,22 @@ public class WebTestConfig {
 		@Before
 		public void setup() {
 			mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+			
+			ResourceDatabasePopulator populator = 
+					new ResourceDatabasePopulator();
+			// 실행할 스크립트를 추가할 수 있다.
+			// 사용할 파일(초기화를 위해 사용할 sql 파일)의 경로를 기입한다.
+			// (Resource 인터페이스를 참조)
+			populator.addScripts(new ClassPathResource("/kr/or/ddit/config/db/initData.sql")); // 설정 파일을 추가한다.
+			populator.setContinueOnError(false);	// 스크립트 실행중 에러 발생시 멈춤 ..
+			
+			
+			// spring bean으로 등록해놓은 dataSource를 사용한다.
+			// 스크립트를 실행한다. 
+			DatabasePopulatorUtils.execute(populator, dataSource);
+			
+			
 		}
-		
 		//get(), post() : get/post 요청
 		// param(파라미터명, 파라미터값) : 요청시 보낼 파라미터
 		// status() : Spring framework에 의해 요청이 처리되고 생성된 응답의 코드

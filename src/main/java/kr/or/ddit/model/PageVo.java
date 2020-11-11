@@ -2,8 +2,8 @@ package kr.or.ddit.model;
 
 public class PageVo {
    
-   private int page;
-   private int pageSize;
+   private String page;
+   private String pageSize;
    
    // 인자가 있는 생성자를 선언하게 되면 default 생성자가 생성이 안됨
    // 대다수의 framework에서는 인자가 없는 생성자를 요구하는 경우가 많음
@@ -16,48 +16,62 @@ public class PageVo {
       
    }
    
-   public PageVo(int page, int pageSize) {
+   public PageVo(String page, String pageSize) {
       this.page = page;
       this.pageSize = pageSize;
    }
    
-   @Override
+   
+   public String getPage() {
+	return page;
+}
+
+public void setPage(String page) {
+	this.page = page;
+}
+
+public String getPageSize() {
+	return pageSize;
+}
+
+public void setPageSize(String pageSize) {
+	this.pageSize = pageSize;
+}
+
+@Override
    public String toString() {
       return "PageVO [page=" + page + ", pageSize=" + pageSize + "]";
    }
+   
    @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + page;
-      result = prime * result + pageSize;
-      return result;
-   }
-   @Override
-   public boolean equals(Object obj) {
-      if (this == obj)
-         return true;
-      if (obj == null)
-         return false;
-      if (getClass() != obj.getClass())
-         return false;
-      PageVo other = (PageVo) obj;
-      if (page != other.page)
-         return false;
-      if (pageSize != other.pageSize)
-         return false;
-      return true;
-   }
-   public int getPage() {
-      return page;
-   }
-   public void setPage(int page) {
-      this.page = page;
-   }
-   public int getPageSize() {
-      return pageSize;
-   }
-   public void setPageSize(int pageSize) {
-      this.pageSize = pageSize;
-   }
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((page == null) ? 0 : page.hashCode());
+	result = prime * result + ((pageSize == null) ? 0 : pageSize.hashCode());
+	return result;
+}
+
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	PageVo other = (PageVo) obj;
+	if (page == null) {
+		if (other.page != null)
+			return false;
+	} else if (!page.equals(other.page))
+		return false;
+	if (pageSize == null) {
+		if (other.pageSize != null)
+			return false;
+	} else if (!pageSize.equals(other.pageSize))
+		return false;
+	return true;
+}
+  
 }

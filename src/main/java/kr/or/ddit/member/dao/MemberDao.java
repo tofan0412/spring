@@ -16,18 +16,20 @@ public class MemberDao implements MemberDaoI{
 	@Resource(name="SqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
 	
-	private static MemberDao dao;
+	// Bean으로 등록하였으므로, Singleton 처리를 하지 않아도 된다. (Spring Container에서 알아서 처리 ..)
+	
+//	private static MemberDao dao;
 	
 	public MemberDao() {
 		
 	}
 	
-	public static MemberDao getDao() {
-		if (dao == null) {
-			dao = new MemberDao();
-		}
-		return dao;
-	}
+//	public static MemberDao getDao() {
+//		if (dao == null) {
+//			dao = new MemberDao();
+//		}
+//		return dao;
+//	}
 	
 	@Override
 	public MemberVo getMember(String userId) {
@@ -42,7 +44,7 @@ public class MemberDao implements MemberDaoI{
 	}
 
 	@Override
-	public List<MemberVo> getMemberPage(Map<String, Integer> page) {
+	public List<MemberVo> getMemberPage(Map<String, String> page) {
 		return sqlSession.selectList("member.getMemberPage", page);
 	}
 
@@ -58,25 +60,15 @@ public class MemberDao implements MemberDaoI{
 
 	@Override
 	public int deleteMember(String userid) {
-		int deleteCnt = sqlSession.delete("member.deleteMember", userid);
-		
-		if(deleteCnt == 1) {
-			sqlSession.commit();
-		}else {
-			sqlSession.rollback();
-		}
-		return deleteCnt;
+//		// TestCode에서 Spring이 관리하는 SqlSession에 대해 
+		// 개발자가 임의로 commit을 하려고 하면 에러가 발생한다.
+		return sqlSession.delete("member.deleteMember", userid);
 	}
 
 	@Override
 	public int updateMember(MemberVo memberVo) {
-		int updateCnt = sqlSession.update("member.updateMember", memberVo);
-		
-		if(updateCnt == 1) {
-			sqlSession.commit();
-		}else {
-			sqlSession.rollback();
-		}
-		return updateCnt;
+		// TestCode에서 Spring이 관리하는 SqlSession에 대해 
+		// 개발자가 임의로 commit을 하려고 하면 에러가 발생한다.
+		return sqlSession.update("member.updateMember", memberVo);
 	}
 }

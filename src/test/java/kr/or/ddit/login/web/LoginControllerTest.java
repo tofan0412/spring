@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -37,6 +38,9 @@ public class LoginControllerTest extends WebTestConfig{
 	// 로그인 요청 메서드( 사용자가 입력한 아이디와 비밀번호가 맞는 경우 )
 	public void processSuccessTest() throws Exception {
 		mockMvc.perform(post("/login/process")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				// 위 줄을 입력하면 Header가 추가되고, Spring이 헤더를 인식하게 된다. 
+				// 바디 영역에서 가져오는 걸 뭔지 인식을 못해서 발생하는 문제 ...
 		.param("userid", "brown")
 		.param("pass", "brownPass"))
 		.andExpect(status().is(200))

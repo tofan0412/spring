@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.io.InputStream;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.WebTestConfig;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.model.PageVo;
 
 public class MemberControllerTest extends WebTestConfig {
 
@@ -28,7 +30,7 @@ public class MemberControllerTest extends WebTestConfig {
 		/***Then***/
 		mockMvc.perform(get("/member/memberRegist"))
 				.andExpect(status().isOk())
-				.andExpect(view().name("/member/memberRegist")); 
+				.andExpect(view().name("tiles.member.memberRegistTile")); 
 	}
 	
 	@Test
@@ -73,8 +75,42 @@ public class MemberControllerTest extends WebTestConfig {
 		/***Then***/
 		mockMvc.perform(get("/member/getMemberList"))
 				.andExpect(status().isOk())
-				.andExpect(view().name("/member/memberList"));
+				.andExpect(view().name("tiles.member.memberListTile"));
 	}
+	
+	
+	@Test
+	public void listAjaxPageTest() throws Exception {
+		/***Given***/
+		
+
+		/***When***/
+		
+		/***Then***/
+		mockMvc.perform(get("/member/listAjaxPage"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("tiles.member.listAjaxPage"));
+	}
+	
+	@Test
+	public void listAjaxHTMLTest() throws Exception{
+		/***Given***/
+
+		/***When***/
+
+		/***Then***/
+		MvcResult result = mockMvc.perform(get("/member/listAjaxHTML")
+								.param("page", "1")
+								.param("pageSize", "5")).andReturn();
+		
+		ModelAndView mav = result.getModelAndView();
+		List<MemberVo> memList = (List<MemberVo>) mav.getModel().get("memList");
+//		int pages = (Integer) mav.getModel().get("pages");
+		assertEquals(5, memList.size());
+//		assertEquals(4, pages);	// 필요한 페이지의 수. 총 멤버수는 17, 한페이지당 5명 따라서 4페이지 필요
+		
+	}
+	
 	
 	@Test
 	public void getMemberList_pTest() throws Exception{
@@ -86,7 +122,7 @@ public class MemberControllerTest extends WebTestConfig {
 		mockMvc.perform(get("/member/getMemberList_P").param("page", "2")
 				.param("pageSize", "5"))
 				.andExpect(status().isOk())
-				.andExpect(view().name("/member/memberList"));
+				.andExpect(view().name("tiles.member.memberListTile"));
 	}
 	
 	@Test
@@ -98,10 +134,45 @@ public class MemberControllerTest extends WebTestConfig {
 				  				  .param("userid", "brown")).andReturn();	
 		/***Then***/
 		ModelAndView mav = result.getModelAndView();
-		assertEquals("/member/member", mav.getViewName());
+		assertEquals("tiles.member.memberTile", mav.getViewName());
 		MemberVo memberVo = (MemberVo) mav.getModel().get("memberVo");
 		assertEquals("brown", memberVo.getUserid());
 	}
+	
+	@Test
+	public void memberInfoAjaxTest() throws Exception{
+		/***Given***/
+		String userid = "brown";
+
+		/***When***/
+		MvcResult result = mockMvc.perform(get("/member/MemberInfoAjax")
+						.param("userid", userid))
+						.andExpect(status().isOk())
+						.andExpect(view().name("tiles.member.memberAjax"))
+						.andReturn();
+		/***Then***/
+		ModelAndView mav = result.getModelAndView();
+		String result_userid = (String) mav.getModel().get("userid");
+	}
+	
+	@Test
+	public void showMemberInfoAjaxTest() throws Exception{
+		/***Given***/
+		String userid = "brown";
+
+		/***When***/
+		MvcResult result = mockMvc.perform(get("/member/showMemberInfoAjax")
+				.param("userid", userid))
+				.andExpect(status().isOk())
+				.andExpect(view().name("member/memberAjaxHTML"))
+				.andReturn();
+		
+		/***Then***/
+		ModelAndView mav = result.getModelAndView();
+		MemberVo memberVo = (MemberVo) mav.getModel().get("memberVo");
+		assertEquals(userid, memberVo.getUserid());
+	}
+	
 	
 	@Test
 	public void showMemberInfo_uTest() throws Exception{

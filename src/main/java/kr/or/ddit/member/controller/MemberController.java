@@ -74,8 +74,15 @@ public class MemberController {
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
+		int insertCnt = 0;
 		
-		int insertCnt = memberService.insertMember(memberVo);
+		// 이 부분 예외 처리 해줘야 한다 !! (문제가 발생할 것 같으면 예외 처리를 해줘야 한다. transaction 때문에..)
+		try {
+			insertCnt = memberService.insertMember(memberVo);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		if (insertCnt > 0) {
 			// 테스트 코드를 위해서
 			model.addAttribute("memberVo", memberVo);
@@ -90,10 +97,10 @@ public class MemberController {
 	public String getMemberList(@RequestParam("page") int page_str, 
 								@RequestParam("pageSize") int pageSize_str,
 								Model model) {
-		Map<String, Integer> page = new HashMap<>();
+		Map<String, String> page = new HashMap<>();
 		
-		int pagenm = page_str;
-		int pageSize = pageSize_str;
+		String pagenm = Integer.toString(page_str);
+		String pageSize = Integer.toString(pageSize_str);
 		
 		model.addAttribute("page", pagenm);
 		model.addAttribute("pageSize" , pageSize);
@@ -117,10 +124,10 @@ public class MemberController {
 	public String getMemberList(Model model) {
 		// 다음과 같이 파라미터를 받으면, getMemberList, getMemberList_p로 메서드를 나눌 필요가 없다.
 		// @RequestParam("page", required=false ,defaultValue=1) int page 
-		Map<String, Integer> page = new HashMap<>();
+		Map<String, String> page = new HashMap<>();
 		
-		int pagenm = 1;
-		int pageSize = 5;
+		String pagenm = "1";
+		String pageSize = "5";
 		
 		model.addAttribute("page", pagenm);
 		model.addAttribute("pageSize" , pageSize);
@@ -146,30 +153,30 @@ public class MemberController {
 	}
 	
 	// 페이지요청과 다르게 page, pageSize 파라미터가 반드시 존재한다는 가정으로 작성한다. 
-	@RequestMapping("/listAjax")
-	public String listAjax(PageVo pageVo, Model model) {
-		logger.debug("pageVo : {}", pageVo);
-		Map<String, Integer> page = new HashMap<>();
-		// 필요한 페이지의 갯수
-		page.put("page", pageVo.getPage());
-		// 한 페이지 당 출력할 글의 갯수
-		page.put("pageSize", pageVo.getPageSize());
-		
-		Map<String, Object> map = memberService.getMemberPage(page);
-		model.addAttribute("memList", map.get("memList"));
-		model.addAttribute("pages", map.get("pages"));
-		
-		return "jsonView";
-	}
+//	@RequestMapping("/listAjax")
+//	public String listAjax(PageVo pageVo, Model model) {
+//		logger.debug("pageVo : {}", pageVo);
+//		Map<String, Integer> page = new HashMap<>();
+//		// 필요한 페이지의 갯수
+//		page.put("page", pageVo.getPage());
+//		// 한 페이지 당 출력할 글의 갯수
+//		page.put("pageSize", pageVo.getPageSize());
+//		
+//		Map<String, Object> map = memberService.getMemberPage(page);
+//		model.addAttribute("memList", map.get("memList"));
+//		model.addAttribute("pages", map.get("pages"));
+//		
+//		return "jsonView";
+//	}
 	
 	
 	@RequestMapping("/listAjaxHTML")
 	public String listAjaxHTML(PageVo pageVo, Model model) {
-		Map<String, Integer> page = new HashMap<>();
+		Map<String, String> page = new HashMap<>();
 		// 필요한 페이지의 갯수
 		page.put("page", pageVo.getPage());
 		// 한 페이지 당 출력할 글의 갯수
-		page.put("pageSize", pageVo.getPageSize());
+		page.put("pagReSize", pageVo.getPageSize());
 		
 		Map<String, Object> map = memberService.getMemberPage(page);
 		model.addAttribute("memList", map.get("memList"));
@@ -197,7 +204,7 @@ public class MemberController {
 		return "tiles.member.memberAjax";
 	}
 	
-	@RequestMapping("showMemberInfoAjax")
+	@RequestMapping("/showMemberInfoAjax")
 	public String showMemberInfoAjax(String userid, Model model) {
 		logger.debug("userid : {}", userid);
 		
