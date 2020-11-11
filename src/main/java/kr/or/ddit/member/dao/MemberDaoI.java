@@ -8,17 +8,17 @@ import org.apache.ibatis.session.SqlSession;
 import kr.or.ddit.member.model.MemberVo;
 
 public interface MemberDaoI {
-	MemberVo getMember(SqlSession sqlSession, String userId);
+	MemberVo getMember(String userId);
 	
-	List<MemberVo> getMemberAll(SqlSession sqlSession);
+	List<MemberVo> getMemberAll();
 	
-	List<MemberVo> getMemberPage(SqlSession sqlSession, Map<String, Integer> page);
+	List<MemberVo> getMemberPage(Map<String, Integer> page);
 
-	int selectMemberTotalCnt(SqlSession sqlSession);
+	int selectMemberTotalCnt();
 	
-	int insertMember(SqlSession sqlSession , MemberVo memberVo);
+	int insertMember(MemberVo memberVo);
 	
-	int deleteMember(SqlSession sqlSession, String userid);
+	int deleteMember(String userid);
 	
-	int updateMember(SqlSession sqlSession , MemberVo memberVo);
+	int updateMember(MemberVo memberVo);
 }

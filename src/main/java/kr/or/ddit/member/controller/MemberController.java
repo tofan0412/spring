@@ -140,8 +140,6 @@ public class MemberController {
 	}
 	
 	
-	
-	
 	@RequestMapping(path="/listAjaxPage")
 	public String listAjaxPage() {
 		return "tiles.member.listAjaxPage";

@@ -20,8 +20,12 @@
 		값을 읽는다. -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:kr/or/ddit/config/db/spring/root-context.xml
-		classpath:kr/or/ddit/config/db/spring/InterceptorContext.xml</param-value>
+		<param-value>
+			classpath:kr/or/ddit/config/db/spring/root-context.xml
+			classpath:kr/or/ddit/config/db/spring/aop-context.xml
+			classpath:kr/or/ddit/config/db/spring/datasource-context.xml
+			classpath:kr/or/ddit/config/db/spring/InterceptorContext.xml
+		</param-value>
 	</context-param>
 
 	<listener>

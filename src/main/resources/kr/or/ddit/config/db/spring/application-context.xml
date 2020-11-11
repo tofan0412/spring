@@ -44,7 +44,6 @@
 		<property name="order" value="0"></property>
 	</bean> 
 	
-	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- prefix : 접두어, suffix : 접미어 -->
