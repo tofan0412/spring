@@ -20,13 +20,17 @@
 	</bean>
 	
 	<!-- myBatisUtil 역할을 한다.  -->
-	<bean id="SqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!--  SqlSessionFactoryBean 객체는 객체를 생성하는 역할을 담당하는 객체
+		  스프링 프레임워크는 스프링 빈을 생성할 때 객체가 FactoryBean 인터페이스를 구현한 경우
+		  인터페이스에 정의되어 있는 getObject() 메서드가 반환하는 객체를 스프링 빈으로 등록한다.
+	 -->
+	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:kr/or/ddit/config/db/mybatis-config.xml"></property>
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
 	<!-- sqlSession : setter 주입-->
 	<bean id="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="SqlSessionFactoryBean"></constructor-arg>
+		<constructor-arg ref="SqlSessionFactory"></constructor-arg>
 	</bean>
 </beans>

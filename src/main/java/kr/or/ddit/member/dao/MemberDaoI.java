@@ -12,7 +12,7 @@ public interface MemberDaoI {
 	
 	List<MemberVo> getMemberAll();
 	
-	List<MemberVo> getMemberPage(Map<String, String> page);
+	List<MemberVo> getMemberPage(Map<String, Integer> page);
 
 	int selectMemberTotalCnt();
 	

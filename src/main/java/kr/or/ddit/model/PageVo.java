@@ -2,8 +2,8 @@ package kr.or.ddit.model;
 
 public class PageVo {
    
-   private String page;
-   private String pageSize;
+   private int page;
+   private int pageSize;
    
    // 인자가 있는 생성자를 선언하게 되면 default 생성자가 생성이 안됨
    // 대다수의 framework에서는 인자가 없는 생성자를 요구하는 경우가 많음
@@ -15,40 +15,29 @@ public class PageVo {
    public PageVo() {
       
    }
-   
-   public PageVo(String page, String pageSize) {
-      this.page = page;
-      this.pageSize = pageSize;
-   }
-   
-   
-   public String getPage() {
+
+public int getPage() {
 	return page;
 }
 
-public void setPage(String page) {
+public void setPage(int page) {
 	this.page = page;
 }
 
-public String getPageSize() {
+public int getPageSize() {
 	return pageSize;
 }
 
-public void setPageSize(String pageSize) {
+public void setPageSize(int pageSize) {
 	this.pageSize = pageSize;
 }
 
 @Override
-   public String toString() {
-      return "PageVO [page=" + page + ", pageSize=" + pageSize + "]";
-   }
-   
-   @Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((page == null) ? 0 : page.hashCode());
-	result = prime * result + ((pageSize == null) ? 0 : pageSize.hashCode());
+	result = prime * result + page;
+	result = prime * result + pageSize;
 	return result;
 }
 
@@ -61,17 +50,16 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	PageVo other = (PageVo) obj;
-	if (page == null) {
-		if (other.page != null)
-			return false;
-	} else if (!page.equals(other.page))
+	if (page != other.page)
 		return false;
-	if (pageSize == null) {
-		if (other.pageSize != null)
-			return false;
-	} else if (!pageSize.equals(other.pageSize))
+	if (pageSize != other.pageSize)
 		return false;
 	return true;
+}
+
+@Override
+public String toString() {
+	return "PageVo [page=" + page + ", pageSize=" + pageSize + "]";
 }
   
 }

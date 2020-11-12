@@ -10,12 +10,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.ddit.db.MyBatisUtil;
 import kr.or.ddit.member.dao.MemberDao;
 import kr.or.ddit.member.dao.MemberDaoI;
 import kr.or.ddit.member.model.MemberVo;
 
+@Transactional
 @Service("memberService")
 public class MemberService implements MemberServiceI {
 	private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
@@ -40,14 +42,14 @@ public class MemberService implements MemberServiceI {
 	}
 
 	@Override
-	public Map<String, Object> getMemberPage(Map<String, String> page) {
+	public Map<String, Object> getMemberPage(Map<String, Integer> page) {
 		
 		Map<String, Object> map = new HashMap<>();
 		List<MemberVo> memList = memberDao.getMemberPage(page);
 		map.put("memList", memList);
 		
 		int totalCnt = memberDao.selectMemberTotalCnt();
-		int pages = (int)Math.ceil((double)totalCnt / Integer.parseInt(page.get("pageSize")));
+		int pages = (int)Math.ceil((double)totalCnt / page.get("pageSize"));
 		
 		map.put("pages", pages);
 		

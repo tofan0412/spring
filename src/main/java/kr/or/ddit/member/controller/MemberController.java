@@ -97,10 +97,10 @@ public class MemberController {
 	public String getMemberList(@RequestParam("page") int page_str, 
 								@RequestParam("pageSize") int pageSize_str,
 								Model model) {
-		Map<String, String> page = new HashMap<>();
+		Map<String, Integer> page = new HashMap<>();
 		
-		String pagenm = Integer.toString(page_str);
-		String pageSize = Integer.toString(pageSize_str);
+		int pagenm = page_str;
+		int pageSize = pageSize_str;
 		
 		model.addAttribute("page", pagenm);
 		model.addAttribute("pageSize" , pageSize);
@@ -124,10 +124,10 @@ public class MemberController {
 	public String getMemberList(Model model) {
 		// 다음과 같이 파라미터를 받으면, getMemberList, getMemberList_p로 메서드를 나눌 필요가 없다.
 		// @RequestParam("page", required=false ,defaultValue=1) int page 
-		Map<String, String> page = new HashMap<>();
+		Map<String, Integer> page = new HashMap<>();
 		
-		String pagenm = "1";
-		String pageSize = "5";
+		int pagenm = 1;
+		int pageSize = 5;
 		
 		model.addAttribute("page", pagenm);
 		model.addAttribute("pageSize" , pageSize);
@@ -156,7 +156,7 @@ public class MemberController {
 //	@RequestMapping("/listAjax")
 //	public String listAjax(PageVo pageVo, Model model) {
 //		logger.debug("pageVo : {}", pageVo);
-//		Map<String, Integer> page = new HashMap<>();
+//		Map<String, String> page = new HashMap<>();
 //		// 필요한 페이지의 갯수
 //		page.put("page", pageVo.getPage());
 //		// 한 페이지 당 출력할 글의 갯수
@@ -172,7 +172,7 @@ public class MemberController {
 	
 	@RequestMapping("/listAjaxHTML")
 	public String listAjaxHTML(PageVo pageVo, Model model) {
-		Map<String, String> page = new HashMap<>();
+		Map<String, Integer> page = new HashMap<>();
 		// 필요한 페이지의 갯수
 		page.put("page", pageVo.getPage());
 		// 한 페이지 당 출력할 글의 갯수

@@ -44,7 +44,7 @@ public class MemberDao implements MemberDaoI{
 	}
 
 	@Override
-	public List<MemberVo> getMemberPage(Map<String, String> page) {
+	public List<MemberVo> getMemberPage(Map<String, Integer> page) {
 		return sqlSession.selectList("member.getMemberPage", page);
 	}
 

@@ -10,7 +10,7 @@ public interface MemberServiceI {
 	
 	List<MemberVo> getMemberAll();
 	
-	Map<String, Object> getMemberPage(Map<String, String> page);
+	Map<String, Object> getMemberPage(Map<String, Integer> page);
 	
 	int insertMember(MemberVo memberVo);
 	
