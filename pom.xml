@@ -169,7 +169,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.11.3</version>
+			<version>2.9.10</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
@@ -228,6 +228,28 @@
 			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
 			<version>1.16</version>
 		</dependency>
+		
+		<!--  spring batch -->
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.batch/spring-batch-core -->
+		<dependency>
+		    <groupId>org.springframework.batch</groupId>
+		    <artifactId>spring-batch-core</artifactId>
+		    <version>3.0.10.RELEASE</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.batch/spring-batch-infrastructure -->
+		<dependency>
+		    <groupId>org.springframework.batch</groupId>
+		    <artifactId>spring-batch-infrastructure</artifactId>
+		    <version>3.0.10.RELEASE</version>
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.batch/spring-batch-test -->
+		<dependency>
+		    <groupId>org.springframework.batch</groupId>
+		    <artifactId>spring-batch-test</artifactId>
+		    <version>3.0.10.RELEASE</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -32,8 +32,6 @@ $(function(){
 	$("#profileDownBtn").on('click', function(){
 		$(location).attr('href', '/member/profileDownload?userid='+ userid);
 	})
-	
-	
 })
 
 function showMemberInfoAjax(userid){

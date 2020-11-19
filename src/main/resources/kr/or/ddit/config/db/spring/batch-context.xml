@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- job Repository : db를 사용하지 않는 형식상의 jobRepository-MapJobRepositoryFactoryBean-->
+	<bean id="jobRepository" 
+	class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean"></bean>
+	
+	<!-- job launcher : SimpleJobLauncher -->
+	<bean id="jobLauncher" 
+	class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"></property>
+	</bean>
+	<bean id="basicReader" class="kr.or.ddit.batch.basic.BasicReader"/>
+	<bean id="basicProcessor" class="kr.or.ddit.batch.basic.BasicProcessor"></bean>
+	<bean id="basicWriter" class="kr.or.ddit.batch.basic.BasicWriter"/>
+	
+	<!--  step에서 기본적으로 사용하는 트랜잭션 매니저, 이름이 정해짐. transactionManager 
+		  기본 이름을 사용하지 않을 경우 tasklet transaction-manager 속성에 등록한다.
+    -->
+	<bean id="resourcelessTX" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"></bean>
+	<batch:job id="basicJob">
+		<batch:step id="basicStep">
+			<batch:tasklet transaction-manager="resourcelessTX"> 
+				<batch:chunk reader="basicReader" 
+							 processor="basicProcessor" 
+							 writer="basicWriter"
+							 commit-interval="2"/> <!--  1개씩 커밋하겠다.. -->
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	<bean class="org.springframework.batch.test.JobLauncherTestUtils"></bean>
+</beans>

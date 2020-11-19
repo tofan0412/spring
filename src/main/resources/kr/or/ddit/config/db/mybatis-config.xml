@@ -6,6 +6,8 @@
 
   <typeAliases>
   	<typeAlias type="kr.or.ddit.member.model.MemberVo" alias="MemberVo"/>
+  	<typeAlias type="kr.or.ddit.batch.yoghurt.model.CycleVo" alias="CycleVo"/>
+  	<typeAlias type="kr.or.ddit.batch.yoghurt.model.DailyVo" alias="DailyVo"/>
   </typeAliases>
   
 <!--   <environments default="development"> -->
@@ -22,5 +24,6 @@
 
   <mappers>
     <mapper resource="kr/or/ddit/config/db/mapper/member.xml"/>
+    <mapper resource="kr/or/ddit/config/db/mapper/yoghurt.xml"/>
   </mappers>
 </configuration>

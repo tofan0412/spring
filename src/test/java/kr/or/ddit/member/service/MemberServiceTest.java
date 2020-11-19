@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import kr.or.ddit.ModelTestConfig;
-import kr.or.ddit.member.dao.MemberDao;
 import kr.or.ddit.member.model.MemberVo;
 
 public class MemberServiceTest extends ModelTestConfig {

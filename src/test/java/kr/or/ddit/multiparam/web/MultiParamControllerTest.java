@@ -16,7 +16,7 @@ public class MultiParamControllerTest extends WebTestConfig{
 		MvcResult result = mockMvc.perform(get("/multi/view")).andReturn();
 		
 		ModelAndView mav = result.getModelAndView();
-		assertEquals("multi/view", mav.getViewName());
+		assertEquals("application/loginView", mav.getViewName());
 	}
 	
 	

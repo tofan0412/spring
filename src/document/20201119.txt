@@ -1,0 +1,29 @@
+spring batch
+개발자가 만들어야 하는 부분 :
+Map<A, B>
+ 
+	reader : implements ItemReader<T>
+	 
+	processor : implements ItemProcessor<I, O>
+	
+	writer : implements ItemWriter<T>
+	
+package : kr.or.ddit.batch.basic	
+BasicReader <String>
+BasicProcessor <String, String>
+BasicWriter <String>
+	
+Cron 초 분 시 일 월 요일
+모든 값 : *
+
+1 * * * * * 	매 1초마다 실행(1분 1초, 2분 1초, 3분 1초 마다 실행한다 ...)
+*/5 * * * * * 	5초마다 실행한다.
+
+발효유 배치
+cycle 정보를 조회하여 해당 애음 요일에 해당하는 일자를 계산한다. 
+daily 테이블에 데이터를 입력한다.
+
+reader		: cycle 테이블의 정보를 조회한다.
+processor	: 애음 요일을 실제 일자로 바꾸는 작업 ( 1 ==> 4~6 )
+writer		: daily 테이블에 정보를 저장한다. 
+
